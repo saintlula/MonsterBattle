@@ -20,7 +20,7 @@ public class Player
         //Make sure team isnt over the limit
         if (monsterCount >= 5)
         {
-            System.out.print.ln("Team seems to be full! No more monster adding allowed!");
+            System.out.println("Team seems to be full! No more monster adding allowed!");
             return;
         }
         //make sure the monster already isnt in the team
@@ -35,7 +35,7 @@ public class Player
         //add monster
         team[monsterCount] = monster;
         monsterCount++;
-        System.out.print.ln(monster.getName() + " added to " + name + "'s team! Congrats!");
+        System.out.println(monster.getName() + " added to " + name + "'s team! Congrats!");
     }
     //Check if the monster is still alive
     public boolean hasAliveMonster()

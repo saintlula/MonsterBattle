@@ -29,7 +29,7 @@ public class MonsterSpecies
 
     public String getType()
     {
-        return Type;
+        return type;
     }
 
     public int getBaseHP()
