@@ -1,3 +1,5 @@
+import java.io.*;
+
 public class MonsterBattleSystem 
 {
     private MonsterSpecies[] speciesList;
@@ -154,6 +156,91 @@ public class MonsterBattleSystem
             }
             return result.toString();
     }
+
+    public void saveData() throws Exception
+    {
+        try (PrintWriter speciesWriter = new PrintWriter("MonsterBattleQ-Species.txt");
+             PrintWriter playerWriter = new PrintWriter("MonsterBattleQ-Players.txt");
+             PrintWriter monsterWriter = new PrintWriter("MonsterBattleQ-Monsters.txt"))
+        {
+            //Saving Species
+            for (int i = 0; i < speciesCount; i++)
+            {
+                MonsterSpecies s = speciesList[i];
+                speciesWriter.printf("%s; %s; %s; %d; %d\n",
+                    s.getCode(), s.getName(), s.getType(), s.getBaseHP(), s.getBaseAttack());
+            }
+            //Saving Players
+            for (int i = 0; i < playerCount; i++)
+            {
+                Player p = players[i];
+                playerWriter.printf("%s; %s\n", p.getPlayerId(), p.getName());
+
+                for (Monster m : p.getMonsters())
+                {
+                    monsterWriter.printf("%s; %s; %s; %d; %d; %d\n",
+                    p.getPlayerId(),
+                    m.getName(),
+                    m.getSpecies().getCode(),
+                    m.getLevel(),
+                    m.getHp(),
+                    m.getAttackPower());
+                }
+            }
+        }
+    }
+    public void loadData() throws Exception
+    {
+        //Load the species
+        try (BufferedReader br = new BufferedReader(new FileReader("MonsterBattleQ-Species.txt")))
+        {
+            String line;
+            while ((line = br.readLine()) != null)
+            {
+                String [] parts = line.split(";");
+                String code = parts[0].trim();
+                String name = parts[1].trim();
+                String type = parts[2].trim();
+                int hp = Integer.parseInt(parts[3].trim());
+                int attack = Integer.parseInt(parts[4].trim());
+                addSpecies(code, name, type, hp, attack);
+            }
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader("MonsterBattleQ-Players.txt")))
+        {
+            String line;
+            while ((line = br.readLine()) != null)
+            {
+                String[] parts = line.split(";");
+                String playerId = parts[0].trim();
+                String name = parts[1].trim();
+                addPlayer((playerId), name);
+            }
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader("MonsterBattleQ-Monsters.txt")))
+        {
+            String line;
+            while ((line = br.readLine()) != null)
+            {
+                String[] parts = line.split(";");
+                String playerId = parts[0].trim();
+                String monsterName = parts[1].trim();
+                String speciesCode = parts[2].trim();
+                int level = Integer.parseInt(parts[3].trim());
+                int hp = Integer.parseInt(parts[3].trim());
+                int attack = Integer.parseInt(parts[5].trim());
+
+                Player player = findPlayer(playerId);
+                MonsterSpecies species = findSpecies(speciesCode);
+                Monster m = createMonsterFromSpecies(species, monsterName);
+                m.setLevel(level);
+                m.setHp(hp);
+                m.setAttackPower(attack);
+                player.addMonster(m);
+            }
+        }
+    }
+
     @Override
     public String toString()
     {

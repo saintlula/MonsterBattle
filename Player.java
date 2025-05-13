@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Player
 {
     private String playerId;
@@ -88,6 +90,10 @@ public class Player
     public Monster[] getTeam()
     {
         return team;
+    }
+    public Monster[] getMonsters() 
+    {
+        return Arrays.copyOf(team, monsterCount);
     }
     public int getMonsterCount()
     {
