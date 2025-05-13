@@ -157,6 +157,19 @@ public class MonsterBattleSystem
             return result.toString();
     }
 
+    public String displayPlayer(String playerId) 
+    {
+        Player player = findPlayer(playerId);
+        if (player != null) 
+        {
+            return player.toString(); 
+        } 
+        else 
+        {
+            return "Player not found  " + playerId;
+        }
+    }
+
     public void saveData() throws Exception
     {
         try (PrintWriter speciesWriter = new PrintWriter("MonsterBattleQ-Species.txt");
