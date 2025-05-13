@@ -158,16 +158,16 @@ public class MonsterBattleSystem
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        sb.append("Monster Battle System\n");
-        sb.append("Registered Species Are:\n");
+        sb.append("~~~~Monster Battle System~~~~\n\n");
+        sb.append("~Registered Species Are~\n\n");
         for (int i = 0; i < speciesCount; i++)
         {
-            sb.append("  ").append(speciesList[i].toString()).append("\n");
+            sb.append(speciesList[i].toString()).append("\n");
         }
-        sb.append("Registered Players:\n");
+        sb.append("\n~Registered Players Are~\n\n");
         for (int i = 0; i < playerCount; i++)
         {
-            sb.append("  ").append(players[i].toString()).append("\n");
+            sb.append(players[i].toString()).append("\n");
         }
         return sb.toString();
     }
